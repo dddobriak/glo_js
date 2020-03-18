@@ -94,11 +94,15 @@ let atts = {
   'depart_date': '2020-05-25'
 };
 
+// формируем запрос
 const getPrice = (url, atts) => {
   return calendar + '/?' + Object.keys(atts).map(key => key + '=' + atts[key]).join('&');
 }
-console.log(getPrice(calendar,atts));
 
+// выводим результат
+getData(getPrice(calendar,atts), (data) => {
+  console.log(JSON.parse(data));
+});
 
 
 // city = JSON.parse(data).filter((item) => {
