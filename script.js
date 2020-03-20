@@ -26,12 +26,20 @@ const showCity = (input, list) => {
 
       // Второе усложненное дз за 19е
       const fixInput = input.value.toLowerCase();
+      //-- Выводим только те города, где соответствует 1я буква
       if (fixInput[0] !== fixItem[0]) return false;
 
       return fixItem.includes(input.value.toLowerCase())
     });
 
-    filterCity.forEach((item) => {
+    //-- Сортируем по алфавиту
+    const sortFilterCity = filterCity.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
+
+    sortFilterCity.forEach((item) => {
       const li = document.createElement('li');
       li.classList.add('dropdown__city');
       li.textContent = item.name;
