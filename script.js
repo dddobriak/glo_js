@@ -26,9 +26,7 @@ const showCity = (input, list) => {
 
       // Второе усложненное дз за 19е
       const fixInput = input.value.toLowerCase();
-      if (fixInput[0] !== fixItem[0]) {
-        return false;
-      }
+      if (fixInput[0] !== fixItem[0]) return false;
 
       return fixItem.includes(input.value.toLowerCase())
     });
