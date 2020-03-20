@@ -23,6 +23,13 @@ const showCity = (input, list) => {
   if (input.value !== '') {
     const filterCity = city.filter((item) => {
       const fixItem = item.name.toLowerCase();
+
+      // Второе усложненное дз за 19е
+      const fixInput = input.value.toLowerCase();
+      if (fixInput[0] !== fixItem[0]) {
+        return false;
+      }
+
       return fixItem.includes(input.value.toLowerCase())
     });
 
@@ -71,13 +78,8 @@ const renderCheapDay = (cheapTicket) => {
 // ДЗ за 19 число - сортировка билетов (которые не на этот день) по дате
 const renderCheapYear = (cheapTickets) => {
   const sortItems = cheapTickets.sort((a, b) => {
-    if (a.depart_date > b.depart_date) {
-      return 1;
-    }
-
-    if (a.depart_date < b.depart_date) {
-      return -1
-    }
+    if (a.depart_date > b.depart_date) return 1;
+    if (a.depart_date < b.depart_date) return -1;
     return 0;
   });
 
@@ -85,6 +87,7 @@ const renderCheapYear = (cheapTickets) => {
   const getItemDates = sortItems.map((item) => {
     return item.depart_date;
   });
+
   console.log(getItemDates);
 };
 
