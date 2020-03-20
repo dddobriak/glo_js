@@ -29,7 +29,7 @@ const showCity = (input, list) => {
     filterCity.forEach((item) => {
       const li = document.createElement('li');
       li.classList.add('dropdown__city');
-      li.textContent = item.name + ' ' + item.code;
+      li.textContent = item.name;
       list.append(li);
     });
 
@@ -80,29 +80,24 @@ dropdownCitiesFrom.addEventListener('click', (event) => {
 dropdownCitiesTo.addEventListener('click', (event) => {
   selectCity(event, inputCitiesTo, dropdownCitiesTo);
 });
+// -- Работа с формой
+formSearch.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const formData = {
+    from: city.find((item) => inputCitiesFrom.value === item.name).code,
+    to: city.find((item) => inputCitiesTo.value === item.name).code,
+    when: inputDateDepart.value
+  }
+
+  console.log(formData);
+});
 
 // Вызовы функций
 getData(citiesApi, (data) => {
   city = JSON.parse(data).filter((item) => item.name);
 });
 
-// ДЗ
-// -- 25 мая, екб-калининград
-let atts = {
-  'origin': 'KGD',
-  'destination': 'SVX',
-  'depart_date': '2020-05-25'
-};
-
-// формируем запрос
-const getPrice = (url, atts) => {
-  return calendar + '/?' + Object.keys(atts).map(key => key + '=' + atts[key]).join('&');
-}
-
-// выводим результат
-getData(getPrice(calendar,atts), (data) => {
-  console.log(JSON.parse(data));
-});
 
 
 // city = JSON.parse(data).filter((item) => {
