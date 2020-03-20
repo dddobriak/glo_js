@@ -64,6 +64,36 @@ const selectCity = (event, input, dropdown) => {
   }
 }
 
+const renderCheapDay = (cheapTicket) => {
+  //console.log(cheapTicket);
+};
+
+// ДЗ за 19 число - сортировка билетов (которые не на этот день) по дате
+const renderCheapYear = (cheapTickets) => {
+  const sortItems = cheapTickets.sort((a, b) => {
+    if (a.depart_date > b.depart_date) {
+      return 1;
+    }
+
+    if (a.depart_date < b.depart_date) {
+      return -1
+    }
+    return 0;
+  });
+  console.log(sortItems);
+};
+
+const renderCheap = (data, date) => {
+  const cheapTicketYear = JSON.parse(data).best_prices;
+
+  const cheapTicketDay = cheapTicketYear.filter((item) => {
+    return item.depart_date === date; 
+  });
+
+  renderCheapYear(cheapTicketYear);
+  renderCheapDay(cheapTicketDay);
+};
+
 // Обработчики событий
 //-- Отображение списка городов
 inputCitiesFrom.addEventListener('input', () => {
@@ -80,17 +110,32 @@ dropdownCitiesFrom.addEventListener('click', (event) => {
 dropdownCitiesTo.addEventListener('click', (event) => {
   selectCity(event, inputCitiesTo, dropdownCitiesTo);
 });
+
 // -- Работа с формой
 formSearch.addEventListener('submit', (event) => {
   event.preventDefault();
 
+  const cityFrom = city.find((item) => {
+    return inputCitiesFrom.value === item.name;
+  });
+
+  const cityTo = city.find((item) => {
+    return inputCitiesTo.value === item.name;
+  });
+
   const formData = {
-    from: city.find((item) => inputCitiesFrom.value === item.name).code,
-    to: city.find((item) => inputCitiesTo.value === item.name).code,
+    from: cityFrom.code,
+    to: cityTo.code,
     when: inputDateDepart.value
   }
 
-  console.log(formData);
+  const requestData = `?depart_date=${formData.when}&origin=${formData.from}` +
+    `&destination=${formData.to}&one_way=true`;
+
+  getData(calendar + requestData, (response) => {
+    renderCheap(response, formData.when);
+  });
+
 });
 
 // Вызовы функций
@@ -98,7 +143,15 @@ getData(citiesApi, (data) => {
   city = JSON.parse(data).filter((item) => item.name);
 });
 
+const arr = ['Максим','Степан','Сергей','Илья','Саня','Гоша','Феофан'];
 
+const firstLetter = (letter) => {
+  return letter[0] === 'С';
+}
+
+const arr2 = arr.filter(firstLetter);
+
+console.log(arr2);
 
 // city = JSON.parse(data).filter((item) => {
 //   return item.name !== null or undefined
