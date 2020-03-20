@@ -80,7 +80,12 @@ const renderCheapYear = (cheapTickets) => {
     }
     return 0;
   });
-  console.log(sortItems);
+
+  // Временный массив дат, для проверки
+  const getItemDates = sortItems.map((item) => {
+    return item.depart_date;
+  });
+  console.log(getItemDates);
 };
 
 const renderCheap = (data, date) => {
@@ -142,16 +147,6 @@ formSearch.addEventListener('submit', (event) => {
 getData(citiesApi, (data) => {
   city = JSON.parse(data).filter((item) => item.name);
 });
-
-const arr = ['Максим','Степан','Сергей','Илья','Саня','Гоша','Феофан'];
-
-const firstLetter = (letter) => {
-  return letter[0] === 'С';
-}
-
-const arr2 = arr.filter(firstLetter);
-
-console.log(arr2);
 
 // city = JSON.parse(data).filter((item) => {
 //   return item.name !== null or undefined
